@@ -9,6 +9,7 @@
     "npm-run-all": "^4.1.5",
     "rollup": "^1.16.1",
     "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-copy": "^3.0.0",
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-node-resolve": "^4.2.4",
     "rollup-plugin-svelte": "^5.1.0",
@@ -26,7 +27,7 @@
   },
   "scripts": {
     "autobuild": "rollup -c -w",
-    "build": "rollup -c",
+    "build": "rm -rf public/* && rollup -c",
     "dev": "run-p start:dev autobuild",
     "start:dev": "sirv public --dev",
     "start": "sirv public",

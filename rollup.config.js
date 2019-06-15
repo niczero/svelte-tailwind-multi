@@ -1,4 +1,5 @@
 import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 import livereload from 'rollup-plugin-livereload';
 import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
@@ -15,6 +16,23 @@ export default {
     sourcemap: true
   },
   plugins: [
+    copy({
+      targets: [
+        {
+          src: 'src/*.html',
+          dest: 'public'
+        },
+        {
+          src: 'src/img/favicon.png',
+          dest: 'public'
+        },
+        {
+          src: 'src/img/**/*',
+          dest: 'public/img'
+        }
+      ]
+    }),
+
     svelte({
       // Enable run-time checks when not in production
       dev: !production,
