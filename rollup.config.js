@@ -1,6 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 import livereload from 'rollup-plugin-livereload';
+import multiInput from 'rollup-plugin-multi-input';
 import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
@@ -8,11 +9,10 @@ import { terser } from 'rollup-plugin-terser';
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-  input: 'src/main.js',
+  input: ['src/index.js', 'src/todo.js'],
   output: {
-    file: 'public/bundle.js',
-    format: 'iife',
-    name: 'app',
+    dir: 'public',
+    format: 'esm',
     sourcemap: true
   },
   plugins: [
@@ -32,6 +32,8 @@ export default {
         }
       ]
     }),
+
+    multiInput(),
 
     svelte({
       // Enable run-time checks when not in production
