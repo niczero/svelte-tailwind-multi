@@ -1,9 +1,11 @@
 import commonjs from 'rollup-plugin-commonjs';
 import copy from 'rollup-plugin-copy';
+import gzip from 'rollup-plugin-gzip';
 import livereload from 'rollup-plugin-livereload';
 import multiInput from 'rollup-plugin-multi-input';
 import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
+import { compress } from 'brotli';
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -57,7 +59,14 @@ export default {
 
     // If we are building for production (npm run build instead of npm run dev),
     // minify
-    production && terser()
+    production && terser() && gzip({
+      customCompression: content => compress(Buffer.from(content)),
+      fileName: '.br'
+    }),
+    production && terser() && gzip({
+      fileName: '.gz'
+    })
+
   ],
   watch: {
     clearScreen: false
